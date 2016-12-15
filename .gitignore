@@ -1,0 +1,185 @@
+#pragma config(I2C_Usage, I2C1, i2cSensors)
+#pragma config(Sensor, in1,    ArmLeft,        sensorPotentiometer)
+#pragma config(Sensor, in2,    ArmRight,       sensorPotentiometer)
+#pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign)
+#pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign)
+#pragma config(Motor,  port1,           LeftLift,      tmotorVex393_HBridge, openLoop)
+#pragma config(Motor,  port2,           RightArmLeft,  tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port3,           RightArmRight, tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port4,           LeftArmRight,  tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port5,           LeftArmLeft,   tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port6,           LeftBack,      tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port7,           LeftFront,     tmotorVex393_MC29, openLoop, encoderPort, I2C_2)
+#pragma config(Motor,  port8,           RightFront,    tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_1)
+#pragma config(Motor,  port9,           RightBack,     tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port10,          RightLift,     tmotorVex393_HBridge, openLoop, reversed)
+// motor setup -----------------------------------------------------------------------------------------------------
+
+
+#pragma platform(VEX)
+
+//Competition Control and Duration Settings
+#pragma competitionControl(Competition)
+#pragma autonomousDuration(300)
+#pragma userControlDuration(900)
+
+#include "Vex_Competition_Includes.c"   //Main competition background code...do not modify!
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//
+//                          Pre-Autonomous Functions
+//
+// You may want to perform some actions before the competition starts. Do them in the
+// following function.
+//
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void pre_auton()
+{
+	// All activities that occur before the competition starts
+	// Example: clearing encoders, setting servo positions, ...
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//
+//                                 Autonomous Task
+//
+// This task is used to control your robot during the autonomous phase of a VEX Competition.
+// You must modify the code to add your own robot specific commands here.
+//
+/////////////////////////////////////////////////////////////////////////////////////////
+
+task autonomous()
+{
+
+
+  void Twitch () //Defines the function to make the bot twitch to lower the scoop
+{
+motor[RightBack] = -127;
+motor[RightFront] = -127;
+motor[LeftBack] = -127;
+motor[LeftFront] = -127;
+wait1Msec(100);
+motor[RightBack] = 0;
+motor[RightFront]= 0;
+motor[LeftBack] = 0;
+motor[LeftFront] = 0;
+wait1Msec(10);
+motor[RightBack] = 127;
+motor[RightFront]= 127;
+motor[LeftBack] = 127;
+motor[LeftFront] = 127;
+wait1Msec(10)
+motor[RightBack] = 0;
+motor[RightFront]= 0;
+motor[LeftBack] = 0;
+motor[LeftFront] = 0;
+}
+
+void Forward (int f)  // Defines the function that makes the bot move forward for a declared ammount of time
+{
+motor[RightBack] = 127;
+motor[RightFront] = 127;
+motor[LeftBack] = 127;
+motor[LeftFront] = 127;
+wait1Msec(f)
+motor[RightBack] = 0;
+motor[RightFront] = 0;
+motor[LeftBack] = 0;
+motor[LeftFront] = 0;
+}
+
+void PTurnRight ()  // Defines the function to make the bot do a point turn to the right
+{
+motor[RightBack] = -127;
+motor[RightFront] = -127;
+motor[LeftBack] = 127;
+motor[LeftFront] = 127; 
+wait1Msec(300) // Don't know how accurate this value is need to experiment
+motor[RightBack] = 0;
+motor[RightFront] = 0;
+motor[LeftBack] = 0;
+motor[LeftFront] = 0;
+}
+
+void PTurnLeft ()  // Defines the function to make the bot do a point turn to the left
+{
+motor[RightBack] = 127;
+motor[RightFront] = 127;
+motor[LeftBack] = -127;
+motor[LeftFront] = -127;
+wait1Msec(300) // again don't know how accurate this is need to experiment
+motor[RightBack] = 0;
+motor[RightFront] = 0;
+motor[LeftBack] = 0;
+motor[LeftFront] = 0;
+}
+
+void SwingL ()
+motor[RightBack] = 127;
+motor[RightFront] = 127;
+motor[LeftBack] = 0;
+motor[LeftFront] = 0;
+wait1Msec(300) // again don't know how accurate this is need to experiment
+motor[RightBack] = 0;
+motor[RightFront] = 0;
+motor[LeftBack] = 0;
+motor[LeftFront] = 0;
+{
+
+void SwingR ()
+{
+motor[RightBack] = 0;
+motor[RightFront] = 0;
+motor[LeftBack] = 127;
+motor[LeftFront] =127;
+wait1Msec(300) // again don't know how accurate this is need to experiment
+motor[RightBack] = 0;
+motor[RightFront] = 0;
+motor[LeftBack] = 0;
+motor[LeftFront] = 0;
+
+void Backwards (int b) // Defines the function to make the bot move Backwards for a declared ammount of time
+{
+motor[RightBack] = -127;
+motor[RightFront] = -127;
+motor[LeftBack] = -127;
+motor[LeftFront] = -127;
+wait1Msec(b)
+motor[RightBack] = 0;
+motor[RightFront] = 0;
+motor[LeftBack] = 0;
+motor[LeftFront] = 0;
+}
+
+
+Twitch ();
+Backwards (1000);
+Forwards (1000);
+PTurnLeft ();
+PTurnRight ();
+SwingR ();
+SwingL ();
+motor[RightBack] = 0;
+motor[RightFront] = 0;
+motor[LeftBack] = 0;
+motor[LeftFront] = 0;
+
+
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//
+//                                 User Control Task
+//
+// This task is used to control your robot during the user control phase of a VEX Competition.
+// You must modify the code to add your own robot specific commands here.
+//
+/////////////////////////////////////////////////////////////////////////////////////////
+
+task usercontrol()
+{
+motor[port2] = abs(vexRT[Ch2]) > 10 ? vexRT[Ch2] : 0;
+
+}
